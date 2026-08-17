@@ -1,14 +1,49 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { Icon } from "astro-icon/components";
+import ThemeToggle from "../components/ThemeToggle.astro";
+import Header from "../components/Header.astro";
+
 const title = "About";
+const color = {
+  dark: {
+    textPrimary: "#00d8ff",
+    textSecondary: "#94a3b8",
+    accentFrom: "#1793d1",
+    accentTo: "#00d8ff",
+    border: "#1a2540",
+  },
+  light: {
+    textPrimary: "#0b1a2b",
+    textSecondary: "#3b5266",
+    accentFrom: "#0f6fa8",
+    accentTo: "#1793d1",
+    border: "#88b8d9",
+  },
+};
 ---
 
 <Layout title={title}>
-    <section>
-    <h1 class="nav-glow-item" transition:name="about" transition:animate="initial">About Me</h1>
-    <p class="text-gray-300">
+    <Header title={title} />
+    <section class="relative min-h-screen flex flex-col p-6 lg:p-12 overflow-hidden">
+    <div class="relative z-10 flex justify-between items-center w-full max-w-7xl mx-auto">
+    <p class="hidden lg:block font-mono text-xs tracking-wider">
+      <span class={`text-[${color.light.accentFrom}] dark:text-[${color.dark.accentTo}] font-semibold`}>portfolio/</span>
+      <span class={`text-[${color.light.textSecondary}] dark:text-[${color.dark.textSecondary}]`}>{title}</span>
+    </p>
+
+    <button
+      aria-label="Toggle theme"
+      class={`text-[${color.light.textSecondary}] dark:text-[${color.dark.textSecondary}] hover:text-[${color.light.accentFrom}] dark:hover:text-[${color.dark.accentTo}] transition-colors rounded-lg hover:bg-black/5 dark:hover:bg-white/5 p-1`}
+    >
+      <ThemeToggle />
+    </button>
+  </div>
+    
+    <h1 class={`text-4xl font-bold text-[${color.light.textPrimary}] dark:text-[${color.dark.textPrimary}] font-chakra`} transition:name="About" transition:animate="initial">About Me</h1>
+    <p class={`text-[${color.light.textSecondary}] dark:text-[${color.dark.textSecondary}]`}>
         I'm a passionate full-stack developer with a love for creating beautiful and functional web applications. With a background in both design and development, I bring a unique perspective to every project I work on.
     </p>
-    <a href="/" class="text-blue-500 hover:underline mt-4 inline-block">Back to Home</a>
+    <a href="/" class={`text-[${color.light.accentFrom}] dark:text-[${color.dark.accentTo}] hover:underline mt-4 inline-block`}>Back to Home</a>
 </section>
 </Layout>

@@ -1,34 +1,156 @@
 ---
-import '../global.css';
-import Header from '../components/Header.astro';
+import "../styles/global.css";
 import { ClientRouter } from "astro:transitions";
 
-const { title } = Astro.props;
+const generateStars = (count: number) => {
+  let shadow = [];
+  for (let i = 0; i < count; i++) {
+    const x = Math.floor(Math.random() * 100);
+    const y = Math.floor(Math.random() * 100);
+    const size = (Math.random() * 1.2 + 0.4).toFixed(1);
+    const opacity = (Math.random() * 0.7 + 0.3).toFixed(2);
+    shadow.push(`${x}vw ${y}vh ${size}px 0px rgba(var(--star-rgb), ${opacity})`);
+  }
+  return shadow.join(", ");
+};
+
+const starsShadow = generateStars(80);
+export interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+}
+
+const {
+  title,
+  description = "Yuzikakal — full-stack developer building fast, precise web experiences with Astro, React, and Linux.",
+  image = "/og-image.png",
+} = Astro.props;
+
+const siteName = "Yuzikakal";
+const pageTitle = title === "Home" ? siteName : `${title} | ${siteName}`;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? "https://yuzikakal.dev");
 ---
 
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		
-		<meta name="generator" content={Astro.generator} />
-		<title>{title} | Yuzika Portfolio</title>
-		<ClientRouter />
-	</head>
-	<body>
-		<!-- <Header /> -->
-		<slot />
-	</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Primary SEO -->
+    <title>{pageTitle}</title>
+    <meta name="title" content={pageTitle} />
+    <meta name="description" content={description} />
+    <meta name="author" content="Yuzikakal" />
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL(image, Astro.url.origin)} />
+    <meta property="og:site_name" content={siteName} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={canonicalURL} />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={new URL(image, Astro.url.origin)} />
+
+    <!-- Theme Meta (Diubah ke light dark) -->
+    <meta name="theme-color" content="#070510" />
+    <meta name="color-scheme" content="light dark" />
+
+    <!-- Structured Data (Person) -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Person",
+      name: "Yuzikakal",
+      url: "https://yuzikakal.dev",
+      jobTitle: "Full-Stack Developer",
+      description,
+      sameAs: [
+        "https://github.com/yuzikakal",
+      ],
+    })} />
+
+    <!-- Theme Inline Script -->
+    <script is:inline>
+      const applyTheme = () => {
+        const localStorageTheme = localStorage.getItem('theme');
+        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        
+        if (localStorageTheme === 'dark' || (!localStorageTheme && systemPrefersDark)) {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+      };
+      applyTheme();
+
+      // Sinkronisasi dengan View Transitions
+      document.addEventListener('astro:after-swap', applyTheme);
+      document.addEventListener('astro:page-load', applyTheme);
+    </script>
+
+    <slot name="head" />
+    <ClientRouter />
+  </head>
+  
+  <body class="bg-[#cfe8f7] text-slate-900 dark:bg-[#070510] dark:text-white antialiased selection:bg-[#1793d1]/40 selection:text-white font-space-g transition-colors duration-200">
+    <div class="stars-bg" style={`box-shadow: ${starsShadow};`}></div>
+	<slot />
+  </body>
 </html>
 
 <style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Warna dasar bintang untuk Light & Dark Mode */
+  :root {
+    /* Biru gelap Slate (#1e3a5f) untuk Light Mode agar terlihat seperti bintik halus/awan malam mini */
+    --star-rgb: 30, 58, 95;
+  }
+
+  :global(.dark) {
+    /* Putih murni untuk Dark Mode */
+    --star-rgb: 255, 255, 255;
+  }
+
+  .stars-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 1.5px;
+    height: 1.5px;
+    background: transparent;
+    z-index: -10;
+    pointer-events: none;
+    transition: box-shadow 0.3s ease;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :global(*),
+    :global(*::before),
+    :global(*::after) {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  :global(a:focus-visible),
+  :global(button:focus-visible) {
+    outline: 2px solid #00d8ff;
+    outline-offset: 4px;
+    border-radius: 4px;
+  }
+
 </style>
