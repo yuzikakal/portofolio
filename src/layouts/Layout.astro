@@ -1,6 +1,7 @@
 ---
 import "../styles/global.css";
 import { ClientRouter } from "astro:transitions";
+import Header from "../components/Header.astro";
 
 const generateStars = (count: number) => {
   let shadow = [];
@@ -79,7 +80,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? "https://yuzikaka
     })} />
 
     <!-- Theme Inline Script -->
-    <script is:inline>
+    <!-- <script is:inline>
       const applyTheme = () => {
         const localStorageTheme = localStorage.getItem('theme');
         const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -95,15 +96,16 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? "https://yuzikaka
       // Sinkronisasi dengan View Transitions
       document.addEventListener('astro:after-swap', applyTheme);
       document.addEventListener('astro:page-load', applyTheme);
-    </script>
+    </script> -->
 
     <slot name="head" />
     <ClientRouter />
   </head>
   
-  <body class="bg-[#cfe8f7] text-slate-900 dark:bg-[#070510] dark:text-white antialiased selection:bg-[#1793d1]/40 selection:text-white font-space-g transition-colors duration-200">
-    <div class="stars-bg" style={`box-shadow: ${starsShadow};`}></div>
-	<slot />
+  <body class="bg-hero bg-cover bg-position-[70%] text-slate-900 antialiased selection:bg-[#1793d1]/40 selection:text-white font-space-g transition-colors duration-200">
+    <!-- <div class="stars-bg" style={`box-shadow: ${starsShadow};`}></div> -->
+    <Header />
+	  <slot />
   </body>
 </html>
 

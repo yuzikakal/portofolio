@@ -58,7 +58,6 @@ const color = {
       aria-label="Toggle theme"
       class={`text-[${color.light.textSecondary}] dark:text-[${color.dark.textSecondary}] hover:text-[${color.light.accentFrom}] dark:hover:text-[${color.dark.accentTo}] transition-colors rounded-lg hover:bg-black/5 dark:hover:bg-white/5 p-1`}
     >
-      <ThemeToggle />
     </button>
   </div>
 
@@ -66,7 +65,7 @@ const color = {
   <section class="relative z-10 max-w-7xl h-full mx-auto my-0 w-full grid grid-cols-1 lg:grid-cols-12 gap-12 flex-1 items-end pb-12">
     <!-- Left Column: Branding -->
     <div class="lg:col-span-7 flex flex-col justify-between items-start space-y-6 lg:space-y-4">
-      <Image src={judul} alt="Yuzikakal — full-stack developer logo" class="w-48 lg:w-72" />
+      <Image src={judul} alt="Yuzikakal — full-stack developer logo" class="hidden lg:block grayscale brightness-0 w-48 lg:w-72" />
       <h1 class="sr-only">Yuzikakal — Full-Stack Developer Portfolio</h1>
       <h1 class="text-xl font-bold">Junior Frontend Developer & Tech Enthusiast</h1>
       <p class={`text-[${color.light.textSecondary}] dark:text-[${color.dark.textSecondary}] text-base sm:text-lg max-w-xl leading-relaxed`}>

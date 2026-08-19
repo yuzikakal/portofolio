@@ -8,6 +8,7 @@
   --font-syne: "Syne", sans-serif;
   --font-space-g: "Space Grotesk", sans-serif;
   --font-jetbrains: "JetBrains Mono", monospace;
+  --background-image-hero: url('../assets/hero.png');
 }
 
 @layer utilities {

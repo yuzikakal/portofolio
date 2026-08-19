@@ -1,96 +1,36 @@
 ---
-import ThemeToggle from './ThemeToggle.astro';
-import { Icon } from 'astro-icon/components';
-import avatarImg from '../assets/yuzika.png';
+import ThemeToggle from "./ThemeToggle.astro";
+import { Icon } from "astro-icon/components";
+import avatarImg from "../assets/yuzika.png";
 ---
 
-<header class="fixed top-0 w-full z-50 p-4 md:p-6">
+<header class="fixed top-0 z-50">
   <!-- Top Navigation -->
-  <nav class="flex justify-between items-center lg:max-w-7xl mx-auto">
-    <div class="w-full lg:w-fit flex justify-between items-center bg-white/20 dark:bg-[#090d16]/80 backdrop-blur-md px-4 lg:px-6 py-3 rounded-xl border border-[#1793d1] dark:border-[#1793d1]/50 shadow-[0_0_15px_rgba(23,147,209,0.15)]">
-
-      <!-- Logo -->
-      <a href="/" class="flex items-center gap-3 font-mono text-sm font-semibold text-white group">
-        <img src={avatarImg.src} alt="Logo" width={50} height={30} class="lg:w-15 object-contain" />
-      </a>
-      <div class="flex flex-row">
-      <ThemeToggle />
+  <div
+    class="flex flex-row lg:flex-col lg:h-screen w-screen lg:w-16 justify-between items-center p-2"
+  >
+    <!-- Logo -->
+    <a
+      href="/"
+      class="flex lg:hidden items-center gap-3 font-mono text-sm font-semibold text-white group min-h-fit "
+    >
+      <img
+        src={avatarImg.src}
+        alt="Logo"
+        width={50}
+        height={30}
+        class="lg:w-25 object-contain grayscale brightness-0"
+      />
+    </a>
+    <div class="flex flex-row">
       <!-- Mobile Menu Trigger Button -->
       <button
         id="menu-toggle-btn"
         aria-label="Toggle Navigation"
-        class="flex md:hidden text-[#00d8ff] rounded-md hover:bg-[#1793d1]/20 transition-colors focus:outline-none p-1"
+        class="flex text-blue-900 rounded-md transition-colors focus:outline-none p-1"
       >
         <Icon name="lucide:text-align-justify" class="w-6 h-6" />
       </button>
-      </div>
     </div>
-
-    <!-- Desktop Navigation Menu -->
-    <div class="hidden lg:flex w-fit h-full justify-between items-center bg-[#090d16]/80 backdrop-blur-md px-6 py-3 rounded-xl border border-[#1793d1]/30 shadow-[0_0_15px_rgba(23,147,209,0.15)]">
-      <ul class="flex gap-20 font-mono text-base text-[#00d8ff]">
-        <li><a href="/" class="hover:text-white transition-colors">Home</a></li>
-        <li><a href="#projects" class="hover:text-white transition-colors">Projects</a></li>
-        <li><a href="#about" class="hover:text-white transition-colors">About</a></li>
-      </ul>
-    </div>
-  </nav>
-
-  <!-- Mobile Bottom Floating Navigation -->
-  <div
-    id="mobile-bottom-nav"
-    class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 md:hidden transition-all duration-300 transform translate-y-20 opacity-0 pointer-events-none"
-  >
-    <nav class="flex items-center gap-6 bg-[#090d16]/90 backdrop-blur-lg px-6 py-3 rounded-full border border-[#1793d1]/50 shadow-[0_0_20px_rgba(23,147,209,0.35)]">
-
-      <!-- Home Button -->
-      <a href="/" class="nav-link flex flex-col items-center gap-1 text-gray-300 hover:text-[#00d8ff] transition-colors">
-        <Icon name="lucide:home" class="w-5 h-5" />
-        <span class="text-[10px] font-mono">Home</span>
-      </a>
-
-      <div class="w-[1px] h-6 bg-white/10"></div>
-
-      <!-- Projects Button -->
-      <a href="#projects" class="nav-link flex flex-col items-center gap-1 text-gray-300 hover:text-[#00d8ff] transition-colors">
-        <Icon name="lucide:folder-git-2" class="w-5 h-5" />
-        <span class="text-[10px] font-mono">Projects</span>
-      </a>
-
-      <div class="w-[1px] h-6 bg-white/10"></div>
-
-      <!-- About Button -->
-      <a href="#about" class="nav-link flex flex-col items-center gap-1 text-gray-300 hover:text-[#00d8ff] transition-colors">
-        <Icon name="lucide:user" class="w-5 h-5" />
-        <span class="text-[10px] font-mono">About</span>
-      </a>
-
-    </nav>
   </div>
 </header>
-
-<script>
-  const toggleBtn = document.getElementById('menu-toggle-btn');
-  const bottomNav = document.getElementById('mobile-bottom-nav');
-  const navLinks = document.querySelectorAll('.nav-link');
-
-  const toggleMenu = () => {
-    if (!bottomNav) return;
-    const isClosed = bottomNav.classList.contains('pointer-events-none');
-    
-    if (isClosed) {
-      bottomNav.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
-      bottomNav.classList.add('translate-y-0', 'opacity-100', 'pointer-events-auto');
-    } else {
-      bottomNav.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
-      bottomNav.classList.remove('translate-y-0', 'opacity-100', 'pointer-events-auto');
-    }
-  };
-
-  toggleBtn?.addEventListener('click', toggleMenu);
-  
-  // auto close the mobile menu when a link is clicked
-  navLinks.forEach(link => {
-    link.addEventListener('click', toggleMenu);
-  });
-</script>
