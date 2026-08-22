@@ -1,7 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import { Icon } from "astro-icon/components";
-import ThemeToggle from "../components/ThemeToggle.astro";
 import Header from "../components/Header.astro";
 
 const title = "About";
@@ -32,12 +31,6 @@ const color = {
       <span class={`text-[${color.light.textSecondary}] dark:text-[${color.dark.textSecondary}]`}>{title}</span>
     </p>
 
-    <button
-      aria-label="Toggle theme"
-      class={`text-[${color.light.textSecondary}] dark:text-[${color.dark.textSecondary}] hover:text-[${color.light.accentFrom}] dark:hover:text-[${color.dark.accentTo}] transition-colors rounded-lg hover:bg-black/5 dark:hover:bg-white/5 p-1`}
-    >
-      <ThemeToggle />
-    </button>
   </div>
     
     <h1 class={`text-4xl font-bold text-[${color.light.textPrimary}] dark:text-[${color.dark.textPrimary}] font-chakra`} transition:name="About" transition:animate="initial">About Me</h1>

@@ -1,18 +1,23 @@
 ---
-import ThemeToggle from "./ThemeToggle.astro";
-import { Icon } from "astro-icon/components";
 import avatarImg from "../assets/yuzika.png";
+
+const navLinks = [
+  { href: "/", label: "Home" },
+  { href: "/about", label: "About" },
+  { href: "/projects", label: "Projects" },
+  { href: "/artwork", label: "Artwork" },
+  { href: "/contact", label: "Contact" },
+];
 ---
 
 <header class="fixed top-0 z-50">
-  <!-- Top Navigation -->
   <div
     class="flex flex-row lg:flex-col lg:h-screen w-screen lg:w-16 justify-between items-center p-2"
   >
-    <!-- Logo -->
+    <!-- Logo Mobile -->
     <a
       href="/"
-      class="flex lg:hidden items-center gap-3 font-mono text-sm font-semibold text-white group min-h-fit "
+      class="flex lg:hidden items-center gap-3 font-mono text-sm font-semibold text-white group min-h-fit"
     >
       <img
         src={avatarImg.src}
@@ -22,15 +27,74 @@ import avatarImg from "../assets/yuzika.png";
         class="lg:w-25 object-contain grayscale brightness-0"
       />
     </a>
-    <div class="flex flex-row">
-      <!-- Mobile Menu Trigger Button -->
+
+    <!-- Container Alpine.js -->
+    <div x-data="{ open: false }" class="flex flex-row">
       <button
-        id="menu-toggle-btn"
+        type="button"
         aria-label="Toggle Navigation"
-        class="flex text-blue-900 rounded-md transition-colors focus:outline-none p-1"
+        class="relative z-50 p-2 focus:outline-none cursor-pointer flex items-center justify-center w-12 h-12"
+        @click="open = !open"
       >
-        <Icon name="lucide:text-align-justify" class="w-6 h-6" />
+        <div class="w-6 h-4 relative flex items-center justify-center">
+          <span
+            class="absolute left-0 w-full h-0.5 bg-white rounded-full transition-all duration-300 ease-in-out"
+            :class="open ? 'top-1/2 -translate-y-1/2 rotate-45' : 'top-0 translate-y-0'"
+          ></span>
+          <span
+            class="absolute left-0 w-full h-0.5 bg-white rounded-full transition-all duration-200 ease-in-out"
+            :class="open ? 'opacity-0 scale-x-0' : 'top-1/2 -translate-y-1/2 opacity-100 scale-x-100'"
+          ></span>
+          <span
+            class="absolute left-0 w-full h-0.5 bg-white rounded-full transition-all duration-300 ease-in-out"
+            :class="open ? 'bottom-1/2 translate-y-1/2 -rotate-45' : 'bottom-0 translate-y-0'"
+          ></span>
+        </div>
       </button>
+
+      <!-- Fullscreen Menu Overlay (Revenge Pop Style Background) -->
+      <div
+        x-show="open"
+        x-cloak
+        x-transition:enter="transition ease-out duration-500 transform"
+        x-transition:enter-start="-translate-y-full"
+        x-transition:enter-end="translate-y-0"
+        x-transition:leave="transition ease-in duration-300 transform"
+        x-transition:leave-start="translate-y-0"
+        x-transition:leave-end="-translate-y-full"
+        transition:animate="none"
+        class="fixed inset-0 z-40 bg-slate-950 flex flex-col items-center justify-center p-4 overflow-hidden"
+      >
+        <!-- Ambient Glow Backdrops (Mika Pikazo Accent Colors: Cyan & Magenta/Pink) -->
+        <div
+          class="absolute -top-32 -left-32 w-96 h-96 bg-cyan-500/20 rounded-full blur-[120px] pointer-events-none"
+        >
+        </div>
+        <div
+          class="absolute -bottom-32 -right-32 w-96 h-96 bg-green-500/20 rounded-full blur-[120px] pointer-events-none"
+        >
+        </div>
+
+        <!-- Grid Pattern Subtle Accent -->
+        <div
+          class="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-size-[32px_32px] pointer-events-none"
+        >
+        </div>
+
+        <!-- Navigation Links -->
+        <nav
+          aria-label="Primary"
+          class="relative z-10 flex flex-col gap-5 font-chakra font-black text-6xl lg:text-8xl tracking-tighter items-center"
+        >
+          {
+            navLinks.map((link) => (
+              <a href={link.href} class="nav-revenge-item">
+                {link.label}
+              </a>
+            ))
+          }
+        </nav>
+      </div>
     </div>
   </div>
 </header>

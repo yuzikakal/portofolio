@@ -3,7 +3,6 @@ import Layout from "../layouts/Layout.astro";
 import { Icon } from "astro-icon/components";
 import { Image } from "astro:assets";
 import judul from "../assets/yuzika.png";
-import ThemeToggle from "../components/ThemeToggle.astro";
 
 const title = "Home";
 const description =
@@ -93,19 +92,6 @@ const color = {
         </a>
       </div>
     </div>
-
-    <!-- Right Column: Navigation -->
-    <nav aria-label="Primary" class="lg:col-span-5 flex flex-col gap-3 font-chakra font-bold text-6xl lg:text-8xl 2xl:text-9xl tracking-tighter lg:items-end">
-      {navLinks.map((link) => (
-        <a 
-          href={link.href} 
-          class="nav-glow-item hover:tracking-widest transition-all duration-300" 
-          transition:name={link.label}
-        >
-          {link.label}
-        </a>
-      ))}
-    </nav>
   </section>
 </main>
 </Layout>
